@@ -1,0 +1,33 @@
+Steps to Follow:
+Prerequisites 
+1. Vscode Claude, api - pyagent, 
+2. Research GPT - Project, set the context
+
+1. Understand ULDD Dataset, Paper 
+	a. PDF to markdown convert - microsoft
+	b. Give it to LLM to help it understand better and get insights.
+2. Take relevant list of papers that have used ULDD dataset and given results
+	a. Can use LLM for study, google scholar
+	b. Literature review steps
+		i. Papers directly citing ULDD
+		ii. SOTA papers in this domain
+
+3. Research questions to answer:
+
+4. Methodology:
+	a. Replicate 1,2 paper from ULDD dataset - setting baseline
+	b. Replicate one sota paper from this domain - setting baseline
+	c. Build a design
+		i. Design document
+		ii. Initial model build
+		iii. Run in mini dataset
+		iv. Run in full dataset , log the values in wandb
+
+5. Experiments section
+	
+
+6. Results:
+
+7. Conclusion
+
+34277464

@@ -1,0 +1,29 @@
+# Dataset (tens of GB, not meant to live in git)
+DriverDrowsinessDataset/
+
+# Kavipriya's actual codebase — separate nested git repo with its own remote
+# (github.com/kavipriyariisc/driver-drowsiness-detection-system). Not ours to
+# push under this repo; keep it fully independent, never absorbed here.
+driver-drowsiness-detection-system/
+
+# Kavipriya's personal academic report (name, roll number, guide names) —
+# excluded pending her consent / a private-repo decision. See docs/story_so_far.md.
+Kavipriya_report (2).html
+Literature/Kavipriya_Ramasamy_24872_Final_Phase (2).pdf
+
+# OS / editor cruft
+.DS_Store
+**/.DS_Store
+.vscode/
+.idea/
+
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.env
+.venv/
+
+# Jupyter / experiment artifacts
+*.log
+wandb/
