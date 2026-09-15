@@ -1,4 +1,9 @@
 #!/bin/zsh
+# ARCHIVED -- historical record only. M4/M5 training already completed successfully
+# using this script; it is not meant to be re-run. Paths below point at a session-
+# specific scratchpad and the old flat scripts/ layout (pre-reorganization), both of
+# which are now stale. See scripts/m4/, scripts/m5/, scripts/common/ for the current,
+# runnable equivalents, and docs/story_so_far.md for what this run actually did.
 set -e
 SCRATCH="/private/tmp/claude-501/-Users-karthikeyansundaravaradhan-Desktop-Masters-Project/a9c96569-4853-4a70-ae28-8f7816e31960/scratchpad"
 EXTRACT_LOG="$SCRATCH/m4_m5_extract.log"

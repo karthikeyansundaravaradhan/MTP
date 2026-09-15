@@ -7,6 +7,199 @@ duplicating them here.
 
 ---
 
+## 2026-09-15 — Reorganized scripts/ (one folder per model + shared helpers/archive)
+
+Now that M1–M7 are all reproduced/built, tidied up the flat `scripts/` directory (13 files with
+no structure) into:
+
+```
+scripts/
+├── m1/train_m1.py            ├── m5/train_m5.py
+├── m2/train_m2.py            ├── m6/train_m6.sh   (wraps her src.models.m6_train CLI directly)
+├── m3/train_m3.py            └── m7/{extract_m7.py, train_m7.py}
+├── m4/train_m4.py
+├── common/                   preprocess_m1_m2_m3.py, extract_m4_m5_features.py (shared prep)
+├── helpers/                  verify_zips.py, wandb_backfill_m1_m4.py, wandb_backfill_m6_m7.py
+└── archive/                  reproduce_m123.py, chain_m4_m5.sh, chain_m6_m7(_resume).sh
+```
+
+The old combined `regen_and_train.py` (preprocessing + M1 + M2 + M3 all in one file) was split
+into a shared `common/preprocess_m1_m2_m3.py` plus one dedicated `train_m1.py`/`train_m2.py`/
+`train_m3.py` per model, matching M4/M5/M7's existing one-script-per-model shape. M6 still has no
+dedicated Python script of its own (training always ran through Kavipriya's own
+`src.models.m6_train` CLI directly) — added `m6/train_m6.sh` as a thin, documented wrapper rather
+than inventing a script that never existed. Superseded/one-off scripts (the early broken-
+checkpoint evaluation attempt, and the two chain scripts that were fully superseded once their
+jobs finished) moved to `archive/` with header notes explaining why, rather than deleted — all
+still syntax-valid, none were touched functionally. Older entries below still reference the old
+flat paths (e.g. `scripts/m4_train.py`) — that's correct for what existed at the time; not
+retroactively rewritten.
+
+## 2026-09-08 — M6 alignment fix completed: both variants got *worse*, not better
+
+Three real bugs in her already-written code had to be fixed before M6 could even run (all local,
+uncommitted patches to `driver-drowsiness-detection-system/src/models/m6_train.py` and
+`m6_validate.py` — not pushed anywhere, not a redesign, just unblocking her own intended pipeline):
+1. Validation wrongly expected video embeddings for B/I/M (never had video) and wrongly excluded
+   subject A (does have video) — a `NO_TELEMETRY` check was used where `NO_VIDEO` was needed, in
+   two separate functions (`validate_embeddings_cache`, `build_session_window_index`). Added a
+   proper `NO_VIDEO` constant and fixed both.
+2. A hardcoded tolerance gate blocked her own `_allocate_session_counts` proportional-reallocation
+   logic from ever running when the video-vs-FAU-CSV window-count gap exceeded 2% — real gaps
+   observed ranged 12% (fold 0) to 33% (fold 2), varying by which subjects a fold happens to test
+   on. Removed the arbitrary cutoff entirely; the reallocation logic doesn't need one, and no
+   single fixed threshold fit the dataset's actual variance.
+3. Device selection had no MPS check at all (`"cuda" if available else "cpu"`), silently training
+   on CPU — same class of bug already found and fixed in M5. Added the MPS branch.
+
+**Results, after all three fixes, full 60fps re-extraction (using our regenerated M5 fold-0
+backbone), both variants, 5-fold CV:**
+
+| Variant | Fixed-alignment result | Kavipriya's original (broken, 1fps) result |
+|---|---|---|
+| M6 Lite | acc 0.332 ± 0.032, F1 0.303 ± 0.022 | acc 0.405, F1 0.360 |
+| M6 Full | acc 0.318 ± 0.058, F1 0.292 ± 0.044 | acc 0.420, F1 0.377 |
+
+**Both variants got worse after the alignment fix, not better.** This is a genuinely useful
+negative result, not a failure to hide: the leading hypothesis is that the proportional window
+reallocation needed for the 12–33%-per-fold video/FAU-CSV duration mismatch (item 2 above)
+introduces its own label-to-embedding alignment noise, since it can't guarantee the *specific*
+windows it adds/drops are the temporally-correct ones — trading a coarse-but-consistent 1fps
+sampling error for a finer-grained but less-certain window-correspondence error. Worth a deeper
+look before drawing final conclusions, but the headline finding — "the known bug wasn't actually
+the dominant source of M6's underperformance vs. M5" — stands regardless and is itself a useful
+data point for where this project's own novel work (`docs/literature_review.md`) should focus:
+not on visual-embedding alignment precision, but likely on the fusion mechanism itself (Direction
+1: gated/residual fusion, so a weak or noisy auxiliary signal literally cannot drag the visual
+baseline down, regardless of alignment quality).
+
+**M7 (built from scratch this session) result**: accuracy 0.452 ± 0.052, macro-F1 0.355 ± 0.063
+across 5 folds (per-fold: 0.474/0.281, 0.444/0.358, 0.534/0.425, 0.376/0.287, 0.433/0.423 —
+fold 3 is again the weakest, consistent with the pattern already seen in M1/M2/M3). Notably close
+to, and slightly above, the thesis's own informally-stated M7 number (0.434 acc / 0.314 F1) —
+which `docs/repo_understanding.md` §7 item 8 had flagged as unverifiable, since it came from a
+document describing a *different* ("hybrid ensemble") M7 than the EfficientNet-B0+BiLSTM+attention
+one actually documented as the thesis's real design. Landing in the same range on a faithful build
+of the real architecture is a reasonable cross-check on both numbers, without over-claiming either.
+Fold 0's per-class breakdown shows Alert F1=0.0 for that fold — the "Alert is the hardest class"
+pattern holds even for this brand-new model.
+
+**Session-final model comparison (everything reproduced or newly built so far):**
+
+| Model | Accuracy | Macro-F1 | Status |
+|---|---|---|---|
+| M1 | 0.390 ± 0.114 | 0.357 ± 0.108 | reproduced (near-exact match to thesis) |
+| M2 | 0.324 ± 0.069 | 0.259 ± 0.074 | reproduced (somewhat below thesis) |
+| M3 | 0.352 ± 0.120 | 0.322 ± 0.125 | reproduced (somewhat below thesis) |
+| M4 | 0.353 ± 0.056 | 0.275 ± 0.058 | trained for the first time ever (no target) |
+| M5 | 0.541 ± 0.080 | 0.447 ± 0.071 | reproduced (near-exact match to thesis) — still the best model |
+| M6 Lite | 0.332 ± 0.032 | 0.303 ± 0.022 | alignment-fixed, but *worse* than the original broken version |
+| M6 Full | 0.318 ± 0.058 | 0.292 ± 0.044 | alignment-fixed, but *worse* than the original broken version |
+| M7 | 0.452 ± 0.052 | 0.355 ± 0.063 | built from scratch, first-ever result |
+
+**M5 remains the strongest model by a clear margin**, exactly as Kavipriya's thesis found — none
+of M6's fix or M7's from-scratch build managed to beat pure frame-level visual classification.
+Combined with the literature review's Direction-1 hypothesis (gate/residual-correct a frozen
+visual baseline rather than fusing as equals), this is a strong signal for where the project's
+genuinely new architectural work should go next, once resumed.
+
+M6 had no wandb integration at all in `m6_train.py`, so all 10 folds (5 lite + 5 full) were
+backfilled into wandb from their saved per-epoch history via new `scripts/wandb_backfill_m6_m7.py`
+(same `_backfill`/`_summary` run-naming convention as the existing M1-4 backfill script), plus the
+missing `M7_summary` aggregate run (M7's individual folds were already logged live during
+training).
+
+All local, uncommitted code changes made to unblock this session's work
+(`driver-drowsiness-detection-system/src/models/m6_train.py`, `m6_validate.py`; new
+`scripts/m7_extract_features.py`, `scripts/m7_train.py`, `scripts/chain_m6_m7*.sh`) are documented
+above and in `docs/repo_understanding.md` — nothing pushed to Kavipriya's remote.
+
+## 2026-09-07 — Pivoted from new-architecture work to M6/M7: both now running
+
+- User asked to pause the STFTransNet-derived new-architecture work (from
+  `docs/literature_review.md`) and instead pursue the two known, well-scoped gaps identified in
+  `docs/repo_understanding.md`: finish Kavipriya's own coded-but-never-run M6 alignment fix, and
+  build M7 from scratch (no code for it exists anywhere in her repo).
+- **M6**: timed her `m6_extractor_from_video.py`'s per-frame seek approach first (~0.03s/frame) —
+  full 60fps extraction over all 29 available-video sessions is ~4-5 hours, feasible with
+  `num_workers=8`. Launched via her existing CLI (unmodified source, just `--ckpt`/`--video-root`/
+  `--fps 60` overrides pointed at our regenerated `M5_fold0.pt` and local dataset path). Also
+  discovered `datasets/processed/ul_dd/` already contains the correct M6 metadata (byte-identical
+  to `ul_dd1`) — the `ul_dd1`→`ul_dd` copy flagged as needed in `repo_understanding.md` §7.3 had
+  already happened at some point; `m6_train.py` needs no further data-path fixing.
+- **M7**: confirmed (again) that no `src/models/m7_*.py` exists anywhere in her repo — wrote it
+  from scratch as `scripts/m7_extract_features.py` (EfficientNet-B0 frozen feature extraction, 16
+  frames/window sampled from the already-existing `datasets/processed/uldd_m7/fold_*.npz` window
+  metadata) and `scripts/m7_train.py` (BiLSTM(256, bidir) + attention pooling + MLP classifier,
+  PyTorch, same wandb/checkpoint/results conventions as the other `_regen` reproductions).
+- All four stages (M6 extraction → M6 lite → M6 full → M7 extraction → M7 training) chained into
+  `scripts/chain_m6_m7.sh`, running detached under `caffeinate` — not complete as of this entry.
+
+## 2026-09-04 — M5 training completed: full M1–M5 reproduction now done
+
+- All 5 folds finished cleanly (~1 day wall-clock, running detached across two Mac sleep/wake
+  cycles thanks to `caffeinate`): fold accuracies 0.597, 0.482, 0.461, 0.670, 0.493 → **mean
+  0.541 ± 0.080 acc, 0.447 ± 0.071 macro-F1**.
+- **Near-exact match to the thesis's own M5 result** (0.545 ± 0.100 acc / 0.444 macro-F1) — macro-
+  F1 landed marginally higher. Combined with M1's earlier near-exact match, this is strong
+  end-to-end validation that the regenerated dataset, fixed paths, and training pipeline are
+  faithful to Kavipriya's original work. Live-logged to wandb per epoch throughout (the MPS-fixed
+  run, not the earlier CPU-only false start).
+- **All of M1–M5 are now reproduced.** Final numbers vs. thesis, all in `results/reports_regen/`
+  and on wandb (project `drowsiness_project`):
+
+  | Model | Reproduced | Thesis |
+  |---|---|---|
+  | M1 | 0.390±0.114 acc / 0.357±0.108 F1 | 0.391±0.116 / 0.348 |
+  | M2 | 0.324±0.069 / 0.259±0.074 | 0.387±0.040 / 0.339 |
+  | M3 | 0.352±0.120 / 0.322±0.125 | 0.399±0.098 / 0.378 |
+  | M4 | 0.353±0.056 / 0.275±0.058 | *(never trained by Kavipriya — no target)* |
+  | M5 | 0.541±0.080 / 0.447±0.071 | 0.545±0.100 / 0.444 |
+
+- Next decision point (with the user): dig into fold 3's weak M1/M2/M3 performance, or move
+  straight to the new work outlined in `docs/literature_review.md` (STFTransNet-derived
+  video+telemetry fusion, targeting the M6-regression and Alert/LowVigilant-boundary weaknesses).
+
+## 2026-09-02 — M5 relaunched (with a real perf fix); literature-review research kicked off in parallel
+
+- **M5 relaunch #1 was inefficient**: caught early (4 iterations in) that Ultralytics was training
+  on pure CPU with 0 dataloader workers, despite MPS being available on this Mac — killed it and
+  added `device='mps', workers=8` to `scripts/m5_train.py`'s `model.train()` (and `device='mps'`
+  to the eval `model.predict()` call too). **Relaunch #2 confirmed ~10x speedup** (0.3 it/s → 3.2
+  it/s, GPU_mem went from 0G to 1.09G). Running detached under `caffeinate` as usual, live-logging
+  to wandb per epoch.
+- User asked to start a parallel research track: find published SOTA work specifically on
+  **video + vehicle/CAN-telemetry fusion** for drowsiness (explicitly excluding biometric
+  wearables — narrower than the "bring in biometrics" idea floated earlier), pick one to
+  implement, then design a custom hybrid/multimodal/ensemble model that improves on it. Launched
+  a background research agent to search the literature, check for papers citing the UL-DD dataset
+  itself, survey the broader SOTA landscape, recommend one implementation-target paper, and
+  propose 2-3 extension directions grounded in what this project has already observed (M6 fusion
+  underperforming unimodal M5, Alert-vs-LowVigilant being the dominant error). Writing findings to
+  `docs/literature_review.md` — not complete as of this entry, check that file directly.
+
+## 2026-09-02 — Pushed to GitHub (github.com/karthikeyansundaravaradhan/MTP)
+
+- Set up Git LFS for the outer repo (`git lfs install` + tracking `*.pdf`, `*.mp4`, `*.pt`,
+  `*.keras`, `*.zip`, `*.npz`, etc. — forward-looking, only `Literature/ULDD Dataset.pdf` (6MB)
+  actually needed it so far).
+- Updated `.gitignore` to also exclude: `driver-drowsiness-detection-system/` (Kavipriya's
+  separate nested repo — never absorbed into this one, standing rule) and Kavipriya's personal
+  report (`Kavipriya_report (2).html`, `Literature/Kavipriya_Ramasamy_24872_Final_Phase (2).pdf`)
+  — excluded by default since it carries her name/roll number/guide names and this repo is
+  public; **pending her consent or a decision to make the repo private** before including those.
+- Scanned every staged file for secrets before committing (clean).
+- **Push initially failed**: this Mac's cached git credentials (`osxkeychain`) belonged to a
+  different GitHub account (`idifro`), not `karthikeyansundaravaradhan` — 403 on push. Installed
+  `gh` CLI and ran `gh auth login --web`; that in turn hit a second, unrelated issue —
+  `~/.config` was owned by `root` (leftover from some earlier `sudo`-run install), so `gh` couldn't
+  write its own config. User fixed ownership (`sudo chown karthikeyansundaravaradhan:staff
+  ~/.config`) themselves — not something to run without asking, since it's a sudo action outside
+  this project. Second login attempt succeeded (`gh auth setup-git`), push went through cleanly.
+- Repo is now live and public at **github.com/karthikeyansundaravaradhan/MTP**, `main` branch,
+  root commit `4a380b1` (docs, scripts, non-sensitive literature — dataset and Kavipriya's repo/
+  report excluded per above).
+
 ## 2026-09-02 — Weights & Biases experiment tracking wired up
 
 - User asked to start logging training runs to wandb, and pasted credentials directly into chat

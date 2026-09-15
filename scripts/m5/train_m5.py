@@ -120,6 +120,7 @@ for fold_idx, test_subjects in enumerate(FOLDS):
             data=str(fold_dir), epochs=YOLO_EPOCHS, imgsz=YOLO_IMGSZ, batch=YOLO_BATCH,
             project=str(CKPT_DIR / 'yolo_cls'), name=f'M5_fold{fold_idx}', exist_ok=True,
             verbose=True, patience=15, lr0=1e-3, lrf=0.01, dropout=0.3,
+            device='mps', workers=8,
         )
         if best_pt.exists():
             model = YOLO(str(best_pt))
@@ -137,7 +138,7 @@ for fold_idx, test_subjects in enumerate(FOLDS):
         img_list = sorted(class_dir.glob('*.jpg'))
         if not img_list:
             continue
-        preds = model.predict(source=str(class_dir), verbose=False, batch=YOLO_BATCH)
+        preds = model.predict(source=str(class_dir), verbose=False, batch=YOLO_BATCH, device='mps')
         for p in preds:
             y_true.append(cn_idx)
             y_pred.append(yolo_to_ours[int(p.probs.top1)])

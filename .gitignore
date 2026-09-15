@@ -27,3 +27,4 @@ __pycache__/
 # Jupyter / experiment artifacts
 *.log
 wandb/
+project_report.html

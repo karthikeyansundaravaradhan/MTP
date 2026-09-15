@@ -1,3 +1,8 @@
+# ARCHIVED -- superseded. This was an early attempt to evaluate Kavipriya's *original*
+# checkpoints (which turned out to be Git LFS pointer stubs, not real weights -- see
+# docs/repo_understanding.md section 8) against datasets/processed/ul_dd. The project
+# retrained from scratch instead (scripts/common/preprocess_m1_m2_m3.py + scripts/m1-3/).
+# Kept only for history, not needed going forward.
 import sys, json
 sys.path.insert(0, "/Users/karthikeyansundaravaradhan/Desktop/Masters Project/driver-drowsiness-detection-system/src")
 sys.path.insert(0, "/Users/karthikeyansundaravaradhan/Desktop/Masters Project/driver-drowsiness-detection-system")
