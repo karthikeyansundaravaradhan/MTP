@@ -7,6 +7,23 @@ duplicating them here.
 
 ---
 
+## 2026-09-15 — New `model_research/` track: video+ECU fusion targeting 0.70–0.80 macro-F1
+
+On the `model_research` git branch (already created and checked out by the user). Wrote
+`model_research/README.md`: a research plan for a transformer/fusion architecture combining video
++ telemetry ("ECU") specifically, aimed at beating M5 (0.447 macro-F1) with a stated target of
+0.70–0.80. Builds directly on `docs/literature_review.md` and the M6/M7 findings rather than
+starting over — key content: an explicit calibration section stating the 0.70–0.80 target is
+1.6–1.8× anything achieved on this dataset so far and likely unreachable via architecture alone
+given the small-N (19 subject) subject-independent protocol; a video-encoder and telemetry-encoder
+options table; a ranked fusion-strategy list (gated/residual correction first, since it directly
+targets the "fusion underperforms M5" pattern seen in M3/M6 by construction); a data-efficiency
+section (cross-dataset pretraining, self-supervised pretraining, synthetic/manifold augmentation,
+ordinal-aware loss) since architecture alone hasn't closed the gap in three attempts (M3, M6 lite,
+M6 full) so far; a 6-phase experiment plan; and explicit honesty checkpoints for when to conclude
+the target isn't reachable under the strict protocol rather than tuning indefinitely. Not yet
+committed to git — pending the user's go-ahead.
+
 ## 2026-09-15 — Reorganized scripts/ (one folder per model + shared helpers/archive)
 
 Now that M1–M7 are all reproduced/built, tidied up the flat `scripts/` directory (13 files with
