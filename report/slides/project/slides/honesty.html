@@ -1,0 +1,24 @@
+<section id="honesty" data-transition="fade" style="background:#F7F6F1;color:#1A2233;font-family:'Inter', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:44px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#6B7280;font-weight:600">Statistics and scope</p>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:64px;font-weight:600;line-height:1.1">Pre-registered tests, and what we do not claim</h2>
+</div>
+<div style="display:flex;gap:56px">
+<table style="width:960px;font-size:26px;color:#1A2233">
+<tr><th style="width:52%;text-align:left">Hypothesis (paired, 16 drivers)</th><th style="width:16%;text-align:right">Δ F1</th><th style="width:16%;text-align:right">p</th><th style="width:16%;text-align:right">Holm</th></tr>
+<tr><td>H1 V* > end-to-end CNN</td><td style="text-align:right">+0.084</td><td style="text-align:right">0.152</td><td style="text-align:right">0.456</td></tr>
+<tr><td>H2 VIGIL no harm, clean</td><td style="text-align:right">−0.002</td><td style="text-align:right">0.802</td><td style="text-align:right">0.802</td></tr>
+<tr><td>H3 VIGIL > vision, camera off</td><td style="text-align:right">+0.163</td><td style="text-align:right">0.076</td><td style="text-align:right">0.306</td></tr>
+<tr><td>H4 calibrated > plain V*</td><td style="text-align:right">+0.075</td><td style="text-align:right">0.177</td><td style="text-align:right">0.456</td></tr>
+</table>
+<div style="flex:1;display:flex;flex-direction:column;gap:18px">
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:34px;font-weight:600">Not claimed</h3>
+<p style="font-size:26px;line-height:1.4;color:#4A5568">State-of-the-art accuracy: 88% and 99% come from leaky or acted protocols</p>
+<p style="font-size:26px;line-height:1.4;color:#4A5568">Significance after Holm: with 16 drivers, none survives</p>
+<p style="font-size:26px;line-height:1.4;color:#4A5568">That VIGIL raises clean accuracy: it raises robustness</p>
+<p style="font-size:26px;line-height:1.4;color:#4A5568">That binary 0.775 measures drowsiness: it is mostly the drive</p>
+</div>
+</div>
+<p style="position:absolute;right:128px;bottom:64px;width:100px;font-size:24px;color:#6B7280;text-align:right">20</p>
+<aside>Four hypotheses were fixed before the final evaluation and tested with exact subject-level permutation tests and Holm correction. None is significant: with 16 drivers and per-driver F1 ranging from 0.03 to 0.99, the test has little power below about 0.15 F1. We report effect sizes and intervals instead of claiming significance, and we are explicit about what the results do not show.</aside>
+</section>

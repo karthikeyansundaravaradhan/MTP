@@ -1,0 +1,35 @@
+<section id="dataset" data-transition="fade" style="background:#F7F6F1;color:#1A2233;font-family:'Inter', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:48px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#0F7A64;font-weight:600">Dataset</p>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:64px;font-weight:600;line-height:1.1">UL-DD: rich sensors, very few labels</h2>
+</div>
+<div style="display:flex;gap:64px;flex:1">
+<div style="flex:1;display:flex;flex-direction:column;gap:20px">
+<p style="font-size:30px;line-height:1.4">19 drivers, each with a 40-minute <b>Alert</b> and a 40-minute <b>Drowsy</b> drive in a truck simulator</p>
+<p style="font-size:30px;line-height:1.4">Frontal IR (240×220), stereo RGB, side-view pose camera, landmarks, telemetry, grip, wearables</p>
+<p style="font-size:30px;line-height:1.4">One KSS self-rating every 4 minutes, binned Alert (≤3), Low-vigilant (4–6), Drowsy (≥7)</p>
+<p style="font-size:30px;line-height:1.4;color:#4A5568">Physiology is excluded by design: the target is a camera system</p>
+</div>
+<div style="width:720px;display:grid;grid-template-columns:1fr 1fr;gap:24px">
+<div style="background:#FFFFFF;border:1px solid #E1E4E8;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:8px">
+<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:600;color:#0F7A64;line-height:1">16</p>
+<p style="font-size:26px;color:#4A5568">drivers with video (29 drives)</p>
+</div>
+<div style="background:#FFFFFF;border:1px solid #E1E4E8;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:8px">
+<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:600;color:#B5651D;line-height:1">290</p>
+<p style="font-size:26px;color:#4A5568">labelled 4-minute epochs</p>
+</div>
+<div style="background:#FFFFFF;border:1px solid #E1E4E8;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:8px">
+<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:600;color:#1A2233;line-height:1">4,532</p>
+<p style="font-size:26px;color:#4A5568">60 s windows, 15 s stride</p>
+</div>
+<div style="background:#FFFFFF;border:1px solid #E1E4E8;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:8px">
+<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:600;color:#1A2233;line-height:1">67%</p>
+<p style="font-size:26px;color:#4A5568">of KSS variance lies between the two drives</p>
+</div>
+</div>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1200px;font-size:24px;color:#6B7280">Protocols: subject-independent 5-fold (contiguous driver letters) and leave-one-subject-out</p>
+<p style="position:absolute;right:128px;bottom:64px;width:100px;font-size:24px;color:#6B7280;text-align:right">5</p>
+<aside>Three things to remember about UL-DD. First, the label budget is tiny: 290 epochs; the 4,532 windows are overlapping views of them. Second, KSS rises inside every drive, so time-on-task is a confound. Third, two thirds of KSS variance is between the Alert and Drowsy drive, so a model that recognises the recording scores well. Every result is subject-independent: 5-fold over contiguous driver letters, and LOSO.</aside>
+</section>

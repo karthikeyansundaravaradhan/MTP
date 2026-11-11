@@ -4,9 +4,22 @@
 
 A Master's project building a **multimodal / hybrid / ensemble model for driver drowsiness
 detection**, using the UL-DD dataset, in the spirit of (and explicitly meant to improve on)
-`Kavipriya_report (2).html` — a prior project on the same dataset. Not yet started: as of this
-writing the repo only contains the raw dataset, the source paper, the prior report, and
-onboarding notes. No modeling code, environment, or experiment tracking exists here yet.
+`Kavipriya_report (2).html` — a prior project on the same dataset.
+
+**Status (2026-11-06):**
+- M1–M7 are reproduced or rebuilt; see `docs/models_summary.md`.
+- The final phase runs in `m8/`, `scripts/m8/` and `results/m8/`:
+  - per-variant results and architecture diagrams are in `docs/m8_models.md`;
+  - the schedule is `model_research/plan_14day.md`; round 2 is `model_research/round2_research.md`.
+- M8 (VIGIL MoE: IR-112 DINOv2 + telemetry/clock fallback) is frozen.
+- **Deliverables are drafted (2026-11-08):**
+  - thesis narrative and claims: `docs/thesis_story.md`;
+  - report: `report/report.md` → `report/thesis_report.docx` via `report/build_docx.py`;
+  - slides: claude.ai Slides artifact, sources in `report/slides/`;
+  - deployment models in `models/final/`, inference in `m8/inference.py`;
+  - Gradio demo: `app/demo.py`;
+  - figures: `scripts/m8/make_figures.py` → `results/figures/`.
+- `docs/story_so_far.md` is always the most current status.
 
 Read these before doing anything substantive:
 - **`docs/story_so_far.md`** — chronological narrative log of the project: what's been done, what
@@ -40,8 +53,23 @@ Masters Project/
 ├── CLAUDE.md                      # this file
 ├── Project_Onboarding.txt         # original task brief
 ├── docs/
+│   ├── story_so_far.md            # chronological log (newest first)
 │   ├── dataset_summary.md
-│   └── report_summary.md
+│   ├── report_summary.md
+│   ├── repo_understanding.md
+│   ├── literature_review.md
+│   ├── models_summary.md          # M1–M7 (reproduction phase) + diagrams
+│   ├── m8_models.md               # final phase: R*, C1–C12, M8, round 2 + diagrams
+│   └── thesis_story.md            # thesis narrative, novelty claims C1–C6, what is not claimed
+├── model_research/                # plan_14day.md, round2_research.md, ablation_plan.md, surveys
+├── m8/                            # final-phase package (windows, extract, data, heads, train, vigil, events, inference)
+├── scripts/                       # per-model entry points; scripts/m8/ = final-phase runs, queues, make_figures.py
+├── models/final/                  # deployment models refit on all 16 video subjects (vstar, vstar_calA, m8, events)
+├── app/demo.py                    # Gradio demo (replay UL-DD drives, upload video, results)
+├── report/                        # report.md, build_docx.py → thesis_report.docx; slides/ = deck sources
+├── results/m8/                    # per-run JSON + runs/<name>/preds.npz
+├── results/figures/               # report/slide figures (f0–f9), from out-of-fold predictions
+├── cache/                         # gitignored: windows, embeddings, logs
 ├── Literature/
 │   ├── ULDD Dataset.pdf(.md)      # dataset paper + markdown conversion
 │   └── Kavipriya_Ramasamy_..._Final_Phase (2).pdf   # prior report, PDF
@@ -103,20 +131,21 @@ File naming is always `<Subject>_<Signal>_<Session>.<ext>`. Full modality/format
 
 These were raised when this file was created and should be resolved with the user before or
 during early project work — see chat history for the original ask, or just ask again if unclear:
-- Scope of "multimodal/hybrid/ensemble" is **explicitly deferred by the user** ("ill setup her
-  codebase here, later we can decide the project scope") — don't assume full re-implementation vs.
-  targeted extension of her M1–M7 pipeline until that conversation happens.
-- Whether to replicate Kavipriya's exact subject-independent fold definitions and 3-class KSS
-  binning for direct comparability, or design a new evaluation protocol.
+- *Resolved 2026-11-05/06:*
+  - **Scope:** video / visual cues, posture, telemetry and time. Physiological CSVs are not model
+    inputs; BVP may only validate rPPG.
+  - **Protocol:** her 5-fold subject-independent folds and 3-class KSS binning are kept, and LOSO
+    is added as co-primary.
+  - **Deliverables** (14–21 days): report, PPT, codebase and a Gradio demo.
+  - See `docs/story_so_far.md` 2026-11-05.
 - Compute: **local machine is primary**; Google Colab and, if needed, a rented Azure VM are the
   fallbacks for anything GPU-heavy (the user's own words) — don't assume a GPU is available by
   default, and don't provision cloud compute without being asked.
-- Experiment tracking: `Project_Onboarding.txt` mentions Weights & Biases (wandb) — not yet set
-  up in this repo.
+- Experiment tracking: wandb is set up (see the section below).
 
 ## Working conventions
 
-- No modeling code exists yet — when it's added, prefer a clear split mirroring the dataset's own
+- Modeling code follows a clear split mirroring the dataset's own
   modality families (biometric / facial / behavioral) plus a fusion layer, consistent with both
   the dataset paper's pipeline (Fig. 5: Data Collection → Individual Pre-processing → Feature
   Extraction → Multimodal Pre-processing → Fusion) and Kavipriya's model family naming (M1, M2,

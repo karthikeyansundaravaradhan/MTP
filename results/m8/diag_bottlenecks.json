@@ -1,0 +1,40 @@
+{
+ "D1": {
+  "between_subject": 0.15651177590913656,
+  "between_session_within_subject": 0.6666238844306563,
+  "within_session": 0.17686433966020704,
+  "labels_per_session": {
+   "2": 19,
+   "1": 8,
+   "3": 2
+  }
+ },
+ "D2": {
+  "within_session_spearman_mean": 0.12414665718539833,
+  "n_sessions": 29,
+  "within_session_spearman_frac_positive": 0.6206896551724138,
+  "session_level_spearman": 0.09704433497536943,
+  "overall_spearman": 0.19037967986239712
+ },
+ "D3": {
+  "f1_argmax": 0.4455129791344161,
+  "f1_expected_cut": 0.43194715180391174,
+  "f1_oracle_subject_offset": 0.5146532804908128
+ },
+ "D4": {
+  "frac_straddle": 0.17210944395410416,
+  "acc_straddle": 0.48333333333333334,
+  "acc_clean": 0.4752132196162047
+ },
+ "D5_linear_probe_f1_vs_train_subjects": {
+  "4": 0.36466774248995026,
+  "6": 0.3674466054323352,
+  "8": 0.38002192063677026,
+  "10": 0.400866266257886,
+  "12": 0.42647110271165706,
+  "15": 0.5061524827560056
+ },
+ "D6": {
+  "r2_time_from_telemetry": 0.038421417298772687
+ }
+}

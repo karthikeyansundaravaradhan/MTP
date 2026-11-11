@@ -1,0 +1,27 @@
+<section id="statement" data-transition="fade" style="background:#FFFFFF;color:#1A2233;font-family:'Inter', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:48px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#0F7A64;font-weight:600">Problem statement</p>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:64px;font-weight:600;line-height:1.1">Detect drowsiness in unseen drivers</h2>
+</div>
+<div style="display:flex;gap:56px">
+<div style="width:620px;display:flex;flex-direction:column;gap:24px">
+<div style="background:#F7F6F1;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:8px">
+<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:600;color:#B5651D;line-height:1">91,000</p>
+<p style="font-size:26px;line-height:1.4;color:#4A5568">police-reported US crashes involving drowsy drivers in 2017, with about 800 deaths (NHTSA)</p>
+</div>
+<div style="background:#F7F6F1;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:8px">
+<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:600;color:#0F7A64;line-height:1">2024</p>
+<p style="font-size:26px;line-height:1.4;color:#4A5568">drowsiness and attention warning mandatory in every new EU vehicle (Regulation 2019/2144)</p>
+</div>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:20px;border:1px solid #E1E4E8;border-left:6px solid #0F7A64;border-radius:12px;padding:40px">
+<p style="font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#6B7280;font-weight:600">The task</p>
+<p style="font-size:30px;line-height:1.4"><b>Input:</b> frontal IR face video of a new driver, plus vehicle telemetry when available</p>
+<p style="font-size:30px;line-height:1.4"><b>Output:</b> KSS level every 60 s: Alert (≤3), Low-vigilant (4–6) or Drowsy (≥7)</p>
+<p style="font-size:30px;line-height:1.4"><b>Constraints:</b> subject-independent, camera-based (no wearables), runs on a 16 GB laptop, keeps working if the camera fails</p>
+<p style="font-size:30px;line-height:1.4;color:#4A5568"><b>Questions:</b> what is an honest score on UL-DD, can it survive sensor loss, and what does the score actually measure?</p>
+</div>
+</div>
+<p style="position:absolute;right:128px;bottom:64px;width:100px;font-size:24px;color:#6B7280;text-align:right">2</p>
+<aside>Drowsy driving causes tens of thousands of crashes a year, and camera-based driver monitoring is now required in new European vehicles. The task we set is concrete. Given the frontal infrared video of a driver the model has never seen, plus telemetry when it is available, predict the three-class KSS level for every 60 second window. It must be camera-based, run on a laptop, and degrade gracefully when the camera fails. Three questions follow: what an honest score looks like on UL-DD, whether the system survives sensor loss, and what the score really measures.</aside>
+</section>

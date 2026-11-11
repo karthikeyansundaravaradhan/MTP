@@ -1,0 +1,40 @@
+<section id="challenges" data-transition="fade" style="background:#FFFFFF;color:#1A2233;font-family:'Inter', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:48px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#0F7A64;font-weight:600">Challenges</p>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:64px;font-weight:600;line-height:1.1">Six things that make this hard</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:28px">
+<div style="background:#F7F6F1;border-radius:12px;padding:32px;display:flex;flex-direction:column;gap:10px">
+<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:56px;font-weight:600;color:#B5651D;line-height:1">0.03–0.99</p>
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:32px;font-weight:600">Unseen drivers</h3>
+<p style="font-size:25px;line-height:1.4;color:#4A5568">Per-driver F1 of one model. Faces and alert baselines vary more than models do.</p>
+</div>
+<div style="background:#F7F6F1;border-radius:12px;padding:32px;display:flex;flex-direction:column;gap:10px">
+<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:56px;font-weight:600;color:#B5651D;line-height:1">290</p>
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:32px;font-weight:600">Very few labels</h3>
+<p style="font-size:25px;line-height:1.4;color:#4A5568">One KSS rating per 4 minutes; 4,532 windows are overlapping views of 290 labels.</p>
+</div>
+<div style="background:#F7F6F1;border-radius:12px;padding:32px;display:flex;flex-direction:column;gap:10px">
+<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:56px;font-weight:600;color:#B5651D;line-height:1">KSS 4–6</p>
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:32px;font-weight:600">Subjective, imbalanced labels</h3>
+<p style="font-size:25px;line-height:1.4;color:#4A5568">Self-reported; the Alert / Low-vigilant boundary is fuzzy and Alert windows are scarce.</p>
+</div>
+<div style="background:#F7F6F1;border-radius:12px;padding:32px;display:flex;flex-direction:column;gap:10px">
+<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:56px;font-weight:600;color:#2F6DB5;line-height:1">0.366</p>
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:32px;font-weight:600">Time-on-task confound</h3>
+<p style="font-size:25px;line-height:1.4;color:#4A5568">Sleepiness rises in every drive, so time-in-drive alone scores 0.366.</p>
+</div>
+<div style="background:#F7F6F1;border-radius:12px;padding:32px;display:flex;flex-direction:column;gap:10px">
+<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:56px;font-weight:600;color:#2F6DB5;line-height:1">67%</p>
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:32px;font-weight:600">Session shortcuts</h3>
+<p style="font-size:25px;line-height:1.4;color:#4A5568">of KSS variance is between the two drives; colour cameras recognise the recording (0.73).</p>
+</div>
+<div style="background:#F7F6F1;border-radius:12px;padding:32px;display:flex;flex-direction:column;gap:10px">
+<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:56px;font-weight:600;color:#2F6DB5;line-height:1">~90 px</p>
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:32px;font-weight:600">Low resolution, failing sensors</h3>
+<p style="font-size:25px;line-height:1.4;color:#4A5568">Face in a 240×220 IR frame; cameras drop out; one 16 GB laptop, no GPU.</p>
+</div>
+</div>
+<p style="position:absolute;right:128px;bottom:64px;width:100px;font-size:24px;color:#6B7280;text-align:right">6</p>
+<aside>Six challenges shaped every design decision. Drivers differ enormously: the same model scores from 0.03 to 0.99 depending on the driver. There are only 290 labels, so anything large overfits. The labels are self-reports with a fuzzy middle class, and Alert is rare in the drowsy drive. Two confounds sit in the data: sleepiness rises with time in every drive, and the two drives differ in lighting and clothing, which colour cameras pick up. Finally, the face is small in the IR frame, cameras fail, and everything had to run on one laptop.</aside>
+</section>

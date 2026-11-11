@@ -1,0 +1,14 @@
+<section id="twist" data-transition="fade" style="background:#FFFFFF;color:#1A2233;font-family:'Inter', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:28px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#C2477A;font-weight:600">C5 · What the models detect</p>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:64px;font-weight:600;line-height:1.1">The models see the drive; the clock sees drowsiness within it</h2>
+</div>
+<img src="/_blob/ec8c37452c264774c267ab28b9bffd76" alt="Two scatter plots of drive-AUC against within-drive AUC. The clock sits at drive-AUC 0.5 and within-drive AUC 0.81 and 0.90. Calibrated models sit at drive-AUC 0.90 with within-drive AUC 0.63 to 0.70. V-star, VIGIL, pose and events lie between" style="width:1664px;height:540px;object-fit:contain">
+<div style="display:flex;gap:48px">
+<p style="flex:1;font-size:28px;line-height:1.4"><b>Within a drive</b>, time orders drowsiness best: AUC 0.81–0.90; vision ≤ 0.72</p>
+<p style="flex:1;font-size:28px;line-height:1.4"><b>Between drives</b>, calibrated models separate Alert from Drowsy at AUC 0.90</p>
+<p style="flex:1;font-size:28px;line-height:1.4;color:#4A5568">Binary KSS ≥ 6 is the drive for 91% of windows: its 0.775 F1 is mostly drive detection</p>
+</div>
+<p style="position:absolute;right:128px;bottom:64px;width:100px;font-size:24px;color:#6B7280;text-align:right">18</p>
+<aside>This is the twist. We split each model’s AUC into two parts. Drive-AUC: does the score separate the Drowsy recording from the Alert recording? Within-drive AUC: does it order windows inside one recording? The clock has no drive signal but orders windows within a drive at 0.81 to 0.90. Every vision model is the opposite: strong between drives, weaker within. So the gains over the clock are drive-level. That is not useless, the Drowsy drive is sleepier, but a deployed system calibrated on an earlier drive might mistake new lighting or clothing for drowsiness. The binary result of 0.775 is mostly this drive detection, so we only report it next to its within-drive AUC of 0.63.</aside>
+</section>

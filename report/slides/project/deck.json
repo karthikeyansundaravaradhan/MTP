@@ -1,0 +1,67 @@
+{
+  "v": 4,
+  "createdOnFiles": {
+    "v": 1,
+    "at": "2026-11-08T12:00:00Z"
+  },
+  "lists": "css",
+  "title": "Seeing Drowsiness or Seeing the Drive",
+  "order": [
+    "cover",
+    "statement",
+    "problem",
+    "literature",
+    "dataset",
+    "challenges",
+    "contributions",
+    "methodology",
+    "clock",
+    "baselines",
+    "architecture",
+    "vstar",
+    "comparison",
+    "comparative",
+    "robustness",
+    "calibration",
+    "confusion",
+    "twist",
+    "knowndriver",
+    "honesty",
+    "benefits",
+    "demo",
+    "conclusion"
+  ],
+  "sections": {
+    "s1": {
+      "description": "Problem statement, why honest numbers are rare, literature, the dataset, challenges and contributions.",
+      "start": "cover"
+    },
+    "s2": {
+      "description": "Methodology and evaluation protocol, the clock bar, and baselines built up to it.",
+      "start": "methodology"
+    },
+    "s3": {
+      "description": "One frozen encoder, three ways to use it, and a comparative study of every model.",
+      "start": "architecture"
+    },
+    "s4": {
+      "description": "What the models actually detect: the drive, not drowsiness within it.",
+      "start": "twist"
+    },
+    "s5": {
+      "description": "Statistics, what we do not claim, benefits, applications, the demo and the conclusion.",
+      "start": "honesty"
+    }
+  },
+  "faces": {
+    "space-grotesk": {
+      "family": "Space Grotesk",
+      "href": "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Inter:wght@400;600&display=swap"
+    },
+    "inter": {
+      "family": "Inter",
+      "href": "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Inter:wght@400;600&display=swap"
+    }
+  },
+  "designSystems": []
+}

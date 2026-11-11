@@ -1,0 +1,20 @@
+<section id="calibration" data-transition="fade" style="background:#F7F6F1;color:#1A2233;font-family:'Inter', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:44px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#0F7A64;font-weight:600">C4 · Driver calibration and events</p>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:64px;font-weight:600;line-height:1.1">Four unlabelled alert minutes are the biggest single gain</h2>
+</div>
+<div style="display:flex;gap:32px">
+<p style="flex:1;font-size:28px;line-height:1.4;background:#FFFFFF;border:1px solid #E1E4E8;border-radius:12px;padding:28px"><b>Calibration:</b> subtract the driver’s mean DINOv2 token over the first 4 minutes of an alert drive. No labels needed.</p>
+<p style="flex:1;font-size:28px;line-height:1.4;background:#FFFFFF;border:1px solid #E1E4E8;border-radius:12px;padding:28px"><b>Events:</b> 27 readable features from 60 fps landmarks: blink duration, PERCLOS, long closures, yawns, nods, posture.</p>
+</div>
+<table style="width:1664px;font-size:28px;color:#1A2233">
+<tr><th style="width:34%;text-align:left">Model</th><th style="width:13%;text-align:right">5-fold</th><th style="width:13%;text-align:right">LOSO</th><th style="width:11%;text-align:right">QWK</th><th style="width:13%;text-align:right">ρ given time</th><th style="width:16%;text-align:right">vs clock (p)</th></tr>
+<tr><td>Clock (time in drive)</td><td style="text-align:right">0.366</td><td style="text-align:right">—</td><td style="text-align:right">0.19</td><td style="text-align:right">0.04</td><td style="text-align:right">—</td></tr>
+<tr><td>V*</td><td style="text-align:right">0.446</td><td style="text-align:right">0.471</td><td style="text-align:right">0.13</td><td style="text-align:right">0.17</td><td style="text-align:right">+0.079 (0.31)</td></tr>
+<tr><td>Events LR</td><td style="text-align:right">0.480</td><td style="text-align:right">0.430</td><td style="text-align:right">0.16</td><td style="text-align:right">0.12</td><td style="text-align:right">+0.114 (0.07)</td></tr>
+<tr><td>Calibrated V*</td><td style="text-align:right">0.521</td><td style="text-align:right">0.518</td><td style="text-align:right">0.52</td><td style="text-align:right">0.63</td><td style="text-align:right">+0.155 (0.01)</td></tr>
+<tr style="background:#DCEFE9"><td><b>Calibrated V* + events</b></td><td style="text-align:right"><b>0.536</b></td><td style="text-align:right"><b>0.525</b></td><td style="text-align:right">0.52</td><td style="text-align:right">0.63</td><td style="text-align:right"><b>+0.170 (&lt;0.01)</b></td></tr>
+</table>
+<p style="position:absolute;right:128px;bottom:64px;width:100px;font-size:24px;color:#6B7280;text-align:right">16</p>
+<aside>Calibration subtracts each driver’s reference appearance, taken from the first four minutes of their alert drive, with no labels. It is the largest single gain, plus 0.075, and holds under LOSO. The 27 event features are interpretable and alone match the foundation model at 0.480. Fused, the two give 0.536 and 0.525. The calibrated models are the only ones that beat the clock significantly, and their predictions correlate with KSS at 0.63 after removing time in drive. Hold on to that, because the next section asks where this gain comes from.</aside>
+</section>

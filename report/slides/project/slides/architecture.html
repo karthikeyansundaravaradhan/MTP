@@ -1,0 +1,9 @@
+<section id="architecture" data-transition="fade" style="background:#FFFFFF;color:#1A2233;font-family:'Inter', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:32px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#0F7A64;font-weight:600">Methodology · Architecture</p>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:64px;font-weight:600;line-height:1.1">One frozen encoder, three ways to use it</h2>
+</div>
+<img src="/_blob/6e7a0c611e96c80e7ab5b579efebda14" alt="System diagram: IR face video, 112 px face crop at 2 fps, frozen DINOv2, per-frame token, feeding the V-star head, the calibrated head, the events fusion and the VIGIL mixture of experts with a telemetry and clock fallback expert and a vision-quality gate" style="width:1664px;height:660px;object-fit:contain">
+<p style="position:absolute;right:128px;bottom:64px;width:100px;font-size:24px;color:#6B7280;text-align:right">11</p>
+<aside>The whole system rests on one frozen DINOv2 ViT-S/14, run on 112 pixel IR face crops at 2 frames per second. Nothing in the encoder is trained. Top row: V-star averages the tokens of a 60 second window and applies one linear layer, 3,843 parameters. Calibrated V-star subtracts the driver’s reference token from their first four alert minutes. Middle row: 27 interpretable event features from the 60 fps landmarks, fused by averaging log-probabilities. Bottom row: VIGIL, a mixture of the vision expert and a telemetry plus clock expert, mixed by a gate that only looks at vision quality.</aside>
+</section>

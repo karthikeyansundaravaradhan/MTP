@@ -1,0 +1,20 @@
+<section id="literature" data-transition="fade" style="background:#FFFFFF;color:#1A2233;font-family:'Inter', Arial, sans-serif;padding:88px 128px 150px;display:flex;flex-direction:column;gap:24px">
+<div style="display:flex;flex-direction:column;gap:12px">
+<p style="font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#0F7A64;font-weight:600">Literature</p>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:56px;font-weight:600;line-height:1.1">What prior work showed, and what we took from it</h2>
+</div>
+<table style="width:1664px;font-size:22px;color:#1A2233;line-height:1.25">
+<tr><th style="width:24%;text-align:left">Work</th><th style="width:28%;text-align:left">Data and split</th><th style="width:20%;text-align:left">Result</th><th style="width:28%;text-align:left">What we took</th></tr>
+<tr><td>Hassan 2025 (ViT-B/16, Swin-T); Kim &amp; Choi 2025</td><td>NTHU-DDD, acted, image or shared-subject split</td><td>95.9–99.5% acc.</td><td>Shared-subject splits inflate scores</td></tr>
+<tr><td>Lakhani 2022 (Video Swin)</td><td>NTHU-DDD, fine-tuned</td><td>44% test, overfits</td><td>Few labels: don’t fine-tune big models</td></tr>
+<tr><td>Ghoddoosian 2019; Wolter 2025</td><td>UTA-RLDD, KSS 3-class, subject-wise</td><td>52.5–65.2% acc.</td><td>Realistic target; blink cues matter</td></tr>
+<tr><td>Massoz 2018</td><td>NIR video, PVT labels, LOSO</td><td>70.7% → 94.2% (5 → 60 s)</td><td>Use 60 s windows</td></tr>
+<tr style="background:#F7F6F1"><td>Bodaghi 2025 (UL-DD paper)</td><td>UL-DD features, stratified 5-fold</td><td>83.8–88.0% acc.</td><td>No video; drivers mixed across folds</td></tr>
+<tr style="background:#F7F6F1"><td>ildahun 2025</td><td>UL-DD tabular, LOSO</td><td>F1 0.362; time only 0.295</td><td>Clock baseline; alert-reference calibration</td></tr>
+<tr><td>ModDrop 2016; QMF 2023; FuseMoE</td><td>Fusion with missing or noisy modalities</td><td>—</td><td>VIGIL: modality dropout + quality gate</td></tr>
+<tr><td>DINOv2 (Oquab 2024); Kumar 2022</td><td>Self-supervised frozen features; linear probes robust out of distribution</td><td>—</td><td>Frozen encoder + tiny head</td></tr>
+</table>
+<p style="font-size:26px;line-height:1.4;width:1500px;border-left:6px solid #B5651D;padding:4px 0 4px 24px"><b>Gap:</b> no subject-independent video benchmark on UL-DD, no quality-gated fallback in drowsiness work, and no study separating drive-level from within-drive signal.</p>
+<p style="position:absolute;right:128px;bottom:56px;width:100px;font-size:24px;color:#6B7280;text-align:right">4</p>
+<aside>The literature splits cleanly in two. Models evaluated with the same people in train and test report 95 to 99 percent. Under subject-wise evaluation on naturalistic KSS, the best results are 52 to 65 percent, and fine-tuning a large video transformer overfits. Massoz showed that 60 second windows matter, which is why we use them. On UL-DD itself, the dataset paper benchmarks only features with stratified folds, and the one subject-independent study reaches macro-F1 0.36, with a time-only model at 0.30. From fusion work we took modality dropout and quality-aware gating, and from foundation-model work the case for frozen features with a linear head. Three gaps remain, and they become our contributions.</aside>
+</section>

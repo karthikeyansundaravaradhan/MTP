@@ -1,5 +1,12 @@
 # Model Research — Video + ECU Fusion for Driver Drowsiness Detection
 
+> **Status note (2026-11-06):** this is the original 2026-09-15 direction doc, kept for history.
+> - Its premise that M5 = 0.447 is superseded: that number was test-selected, and the honest
+>   retrain R4s is 0.333.
+> - Current plan: [`plan_14day.md`](plan_14day.md). Round 2: [`round2_research.md`](round2_research.md).
+> - Final-phase models and results: [`../docs/m8_models.md`](../docs/m8_models.md).
+> - Current best under P0: V\* 0.440. Frozen final model: M8.
+
 **Goal:** design a transformer-based or fusion architecture that combines **video** (IR facial
 video) and **ECU/vehicle-telemetry** data from UL-DD to beat the current best model (**M5**,
 YOLOv8n-cls on IR frames, **macro-F1 0.447**) with a **target of 0.70–0.80 macro-F1**, under the

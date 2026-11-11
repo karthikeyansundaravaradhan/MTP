@@ -11,6 +11,10 @@ driver-drowsiness-detection-system/
 Kavipriya_report (2).html
 Literature/Kavipriya_Ramasamy_24872_Final_Phase (2).pdf
 
+# M8 feature caches and per-run outputs (regenerable, multi-GB)
+cache/
+results/m8/runs/
+
 # OS / editor cruft
 .DS_Store
 **/.DS_Store

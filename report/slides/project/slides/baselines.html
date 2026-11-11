@@ -1,0 +1,14 @@
+<section id="baselines" data-transition="fade" style="background:#F7F6F1;color:#1A2233;font-family:'Inter', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:36px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#B5651D;font-weight:600">C1 · Baselines, built up</p>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:64px;font-weight:600;line-height:1.1">Conventional pipelines all stall at the clock</h2>
+</div>
+<img src="/_blob/97289c9156b36e3f5c54a218ed8e8590" alt="Bar chart of fold-mean macro-F1 by build stage: floors 0.154 and 0.320, clock 0.353, hand-built statistics 0.306 to 0.332, sequence models M1 to M7 between 0.259 and 0.357, end-to-end CNN M5 0.332, then V-star 0.440, VIGIL 0.416, events 0.440, calibrated V-star 0.500, calibrated plus events 0.503" style="width:1664px;height:540px;object-fit:contain">
+<div style="display:flex;gap:48px">
+<p style="flex:1;font-size:28px;line-height:1.4">Hand-built face, telemetry and image statistics: <b>0.31–0.33</b></p>
+<p style="flex:1;font-size:28px;line-height:1.4">Sequence models M1–M4, M6, M7 (BiLSTM, attention fusion, CNN-BiLSTM): <b>0.26–0.36</b></p>
+<p style="flex:1;font-size:28px;line-height:1.4">M5, end-to-end CNN on IR frames, inner-validation checkpoints: <b>0.333</b></p>
+</div>
+<p style="position:absolute;right:128px;bottom:64px;width:100px;font-size:24px;color:#6B7280;text-align:right">10</p>
+<aside>We built the system up one rung at a time, each under the same subject-independent protocol, with all model selection inside the training drivers. Floors first, then the clock. Then hand-built window statistics of face geometry and telemetry, and an image-statistics probe that rules out a lighting shortcut. Then six sequence models, M1 to M4, M6 and M7: BiLSTMs on facial action units, telemetry and geometric features, attention fusion of face and telemetry, embedding fusion, and a CNN-BiLSTM on IR frames. Then M5, an end-to-end YOLOv8n classifier fine-tuned on IR frames with three seeds and checkpoints chosen on inner-validation drivers. Every one of them lands between 0.26 and 0.36 fold-mean, level with the clock, and fusing modalities never beats the better single stream. With 290 labelled epochs, features learned from scratch do not transfer to new drivers. That motivates the next rung: features learned elsewhere and kept frozen. These bars are fold-means; the sequence models use FAU-indexed windows. The bars on the right are where the rest of the talk goes.</aside>
+</section>

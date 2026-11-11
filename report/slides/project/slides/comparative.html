@@ -1,0 +1,24 @@
+<section id="comparative" data-transition="fade" style="background:#F7F6F1;color:#1A2233;font-family:'Inter', Arial, sans-serif;padding:112px 128px 150px;display:flex;flex-direction:column;gap:28px">
+<div style="display:flex;flex-direction:column;gap:12px">
+<p style="font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#0F7A64;font-weight:600">Results · Comparative study</p>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:56px;font-weight:600;line-height:1.1">Every model on the same unseen drivers</h2>
+</div>
+<table style="width:1664px;font-size:24px;color:#1A2233">
+<tr><th style="width:27%;text-align:left">Model</th><th style="width:21%;text-align:left">Signals</th><th style="width:15%;text-align:right">5-fold F1 [95% CI]</th><th style="width:8%;text-align:right">LOSO</th><th style="width:9%;text-align:right">Epoch F1</th><th style="width:7%;text-align:right">QWK</th><th style="width:13%;text-align:right">Δ clock (p)</th></tr>
+<tr><td>Clock (R1)</td><td>time in drive only</td><td style="text-align:right">0.366 [0.32, 0.41]</td><td style="text-align:right">—</td><td style="text-align:right">0.369</td><td style="text-align:right">0.19</td><td style="text-align:right">—</td></tr>
+<tr><td>Sequence models M1–M4, M6, M7†</td><td>FAU, landmarks, IR frames</td><td style="text-align:right">0.26–0.36</td><td style="text-align:right">—</td><td style="text-align:right">—</td><td style="text-align:right">—</td><td style="text-align:right">—</td></tr>
+<tr><td>M5 end-to-end CNN (R4s)</td><td>IR frames</td><td style="text-align:right">0.362 [0.29, 0.43]</td><td style="text-align:right">—</td><td style="text-align:right">0.363</td><td style="text-align:right">0.27</td><td style="text-align:right">−0.004 (0.95)</td></tr>
+<tr><td>VIGIL (M8), clean input</td><td>IR + telemetry + clock</td><td style="text-align:right">0.428 [0.34, 0.50]</td><td style="text-align:right">—</td><td style="text-align:right">0.419</td><td style="text-align:right">0.15</td><td style="text-align:right">+0.062 (0.43)</td></tr>
+<tr><td>V* frozen DINOv2</td><td>IR face crops</td><td style="text-align:right">0.446 [0.36, 0.52]</td><td style="text-align:right">0.471</td><td style="text-align:right">0.440</td><td style="text-align:right">0.13</td><td style="text-align:right">+0.079 (0.31)</td></tr>
+<tr><td>Events LR</td><td>60 fps eye, mouth, posture</td><td style="text-align:right">0.480 [0.40, 0.55]</td><td style="text-align:right">0.430</td><td style="text-align:right">0.507</td><td style="text-align:right">0.16</td><td style="text-align:right">+0.114 (0.07)</td></tr>
+<tr><td>Calibrated V*</td><td>IR + 4 alert minutes</td><td style="text-align:right">0.521 [0.44, 0.59]</td><td style="text-align:right">0.518</td><td style="text-align:right">0.540</td><td style="text-align:right"><b>0.52</b></td><td style="text-align:right">+0.155 (<b>0.01</b>)</td></tr>
+<tr style="background:#E3EEF9"><td><b>Calibrated V* + events</b></td><td>IR + alert ref + events</td><td style="text-align:right"><b>0.536 [0.45, 0.61]</b></td><td style="text-align:right"><b>0.525</b></td><td style="text-align:right"><b>0.545</b></td><td style="text-align:right"><b>0.52</b></td><td style="text-align:right">+0.170 (<b>&lt;0.01</b>)</td></tr>
+</table>
+<div style="display:flex;gap:48px">
+<p style="flex:1;font-size:24px;line-height:1.4;color:#4A5568"><b style="color:#1A2233">External UL-DD reference:</b> tabular LOSO macro-F1 0.362 (ildahun 2025); the dataset paper’s 83.8–88.0% is accuracy with stratified folds</p>
+<p style="flex:1;font-size:24px;line-height:1.4;color:#4A5568"><b style="color:#1A2233">Camera off (60 s):</b> VIGIL 0.349 vs vision-only 0.186; binary B2: calibrated V* 0.775, AUC 0.86</p>
+</div>
+<p style="position:absolute;left:128px;bottom:56px;width:1400px;font-size:22px;color:#6B7280">Pooled macro-F1, 3-class KSS. † fold-mean on FAU-indexed windows. p: exact subject-level permutation test.</p>
+<p style="position:absolute;right:128px;bottom:56px;width:100px;font-size:24px;color:#6B7280;text-align:right">14</p>
+<aside>The full comparison on one table, all under the same subject-independent protocol. The clock, the sequence models and the end-to-end CNN all sit between 0.26 and 0.37. Frozen DINOv2 features reach 0.446, and 0.471 under LOSO. Events alone reach 0.48 but lose more under LOSO. The calibrated models are best on every metric: 0.536 pooled, 0.525 LOSO, epoch F1 0.545, ordinal agreement 0.52, and they are the only ones significantly above the clock. For context, the only other subject-independent UL-DD result is a tabular model at 0.362 macro-F1, and the dataset paper’s 84 to 88 percent uses stratified folds that mix drivers.</aside>
+</section>

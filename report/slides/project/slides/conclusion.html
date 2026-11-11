@@ -1,0 +1,18 @@
+<section id="conclusion" data-transition="fade" style="background:#16202E;color:#F2F1EC;font-family:'Inter', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:48px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#7FD1BC;font-weight:600">Conclusion</p>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:64px;font-weight:600;line-height:1.1;color:#F2F1EC">Honest, robust, and clear about what it measures</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:32px 64px">
+<p style="font-size:30px;line-height:1.4;color:#F2F1EC"><b>Honest bar:</b> built up from floors, every conventional baseline ties the clock, 0.366</p>
+<p style="font-size:30px;line-height:1.4;color:#F2F1EC"><b>Better features:</b> frozen DINOv2 + 3,843 parameters reach 0.446 / LOSO 0.471</p>
+<p style="font-size:30px;line-height:1.4;color:#F2F1EC"><b>Calibration:</b> 4 unlabelled minutes + events give 0.536 / 0.525, beating the clock</p>
+<p style="font-size:30px;line-height:1.4;color:#F2F1EC"><b>Robustness:</b> VIGIL keeps 0.349 with the camera off, against 0.186</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:16px;border-top:2px solid #3A4A60;padding:32px 0 0 0">
+<p style="font-size:30px;line-height:1.4;color:#7FD1BC"><b>The caveat:</b> on UL-DD, the gains over the clock are drive-level; within a drive, time still wins.</p>
+<p style="font-size:28px;line-height:1.4;color:#BFC9D6">Next: several drives per state per driver, denser labels, and models optimised for within-drive ordering.</p>
+</div>
+<p style="position:absolute;right:128px;bottom:64px;width:100px;font-size:24px;color:#8A96A6;text-align:right">23</p>
+<aside>To close. Built up from the simplest baselines, the honest bar is the clock: hand-built features and an end-to-end CNN do not clear it. Frozen foundation features clear it with a tiny head. Four unlabelled alert minutes and interpretable events push to 0.54, the only models that beat the clock significantly. VIGIL keeps working when the camera fails. And the caveat that answers the title: on UL-DD, what separates these models from the clock is mostly which drive they are watching. To go further we need datasets with several drives per state per driver and denser labels. Thank you, happy to take questions.</aside>
+</section>

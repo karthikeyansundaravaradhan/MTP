@@ -1,0 +1,17 @@
+<section id="confusion" data-transition="fade" style="background:#FFFFFF;color:#1A2233;font-family:'Inter', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:32px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#0F7A64;font-weight:600">Results · error structure</p>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:64px;font-weight:600;line-height:1.1">Calibration removes Alert↔Drowsy errors</h2>
+</div>
+<div style="display:flex;gap:56px;align-items:center">
+<img src="/_blob/4649d53743782de47d13f5d9f552c4fa" alt="Six row-normalised confusion matrices for clock, end-to-end CNN, V-star, VIGIL, calibrated V-star and calibrated plus events; calibrated models have near-zero Alert to Drowsy errors" style="width:960px;height:660px;object-fit:contain">
+<div style="flex:1;display:flex;flex-direction:column;gap:28px">
+<p style="font-size:28px;line-height:1.4">Clock and the end-to-end CNN almost never predict <b>Alert</b> correctly</p>
+<p style="font-size:28px;line-height:1.4">V* spreads its errors over every cell</p>
+<p style="font-size:28px;line-height:1.4">Calibrated models: only 0–3% of Alert windows called Drowsy</p>
+<p style="font-size:28px;line-height:1.4;color:#4A5568">Remaining error is adjacent: half of Drowsy windows are called Low-vigilant</p>
+</div>
+</div>
+<p style="position:absolute;right:128px;bottom:64px;width:100px;font-size:24px;color:#6B7280;text-align:right">17</p>
+<aside>The confusion matrices show the shape of the errors. The clock and the end-to-end CNN cannot recognise Alert. V-star spreads errors everywhere. The calibrated models almost never confuse Alert with Drowsy, which is why ordinal agreement jumps, but they call about half of the Drowsy windows Low-vigilant: the adjacent boundary remains hard, as in the UTA-RLDD literature.</aside>
+</section>

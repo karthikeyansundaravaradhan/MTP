@@ -1,0 +1,14 @@
+<section id="robustness" data-transition="fade" style="background:#FFFFFF;color:#1A2233;font-family:'Inter', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:32px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#7B4FB3;font-weight:600">C3 · VIGIL (M8)</p>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:64px;font-weight:600;line-height:1.1">When the camera fails, VIGIL falls back instead of collapsing</h2>
+</div>
+<img src="/_blob/74d729dc5be6c61ac21fb5f82ed91859" alt="Left: macro-F1 versus camera blackout length; VIGIL stays at 0.43 to 0.35 while vision-only drops to 0.186 at 60 seconds. Right: VIGIL gate rises from 0.13 to 0.93 at full blackout while the residual gate stays near 0.12" style="width:1664px;height:520px;object-fit:contain">
+<div style="display:flex;gap:48px">
+<p style="flex:1;font-size:28px;line-height:1.4"><b>Clean input:</b> 0.428 vs 0.430, no harm (p = 0.80)</p>
+<p style="flex:1;font-size:28px;line-height:1.4"><b>Camera off:</b> 0.349 vs 0.186 (+0.163, p = 0.076)</p>
+<p style="flex:1;font-size:28px;line-height:1.4;color:#4A5568">Gate opens 0.13 → 0.93; the residual design’s gate never moved</p>
+</div>
+<p style="position:absolute;right:128px;bottom:64px;width:100px;font-size:24px;color:#6B7280;text-align:right">15</p>
+<aside>VIGIL is trained with simulated camera blackouts of 15 to 60 seconds, so the gate sees vision fail. On clean input it equals the vision model. With the camera fully off for a window, the vision model collapses to 0.186, predicting one class, while VIGIL keeps 0.349, close to the clock, because the gate opens to 0.93 and hands the decision to the telemetry plus clock expert. An earlier residual-gate design looked robust too, but its gate never moved: that negative result is why VIGIL is a mixture of experts. The effect is large but not significant after Holm with 16 drivers.</aside>
+</section>
